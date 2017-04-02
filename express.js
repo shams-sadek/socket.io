@@ -1,8 +1,54 @@
 var express = require('express');
 
+var todoController = require('./controllers/todoController');
+
+var bodyParser = require('body-parser');
+
 var app = express();
 
 app.set('view engine', 'ejs');
+
+
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+
+
+
+/**
+ | -----------------------------------------------------------------------------
+ | mongodb
+ | -----------------------------------------------------------------------------
+ */
+// var mongoose = require('mongoose');
+
+
+
+
+//Connect to the mongodb
+// mongoose.connect('mongodb://localhost/testaroo');
+// mongoose.connect('mongodb://127.0.0.1:27017/demo');
+
+
+// var itemOne = Todo({ item: 'buy flowers'}).save(function(err){
+//     if (err) throw err;
+//     console.log('Saved Item');
+// });
+
+
+
+// mongoose.model('users', { name: String });
+//
+// app.use('/users', function(req, res){
+//     mongoose.model('users').find(function(err, users){
+//         res.send(users);
+//     });
+// });
+
+
+
+// fire controllers
+todoController(app);
 
 /**
  | ----------------------------------------------------------
@@ -10,11 +56,6 @@ app.set('view engine', 'ejs');
  | ----------------------------------------------------------
  */
 app.use('/assets', express.static('assets'));
-// app.use(express.static('assets'));
-// app.use('/assets', function(req, res, next){
-//     console.log(req.url);
-//     next();
-// });
 
 
 app.get('/', function(req, res){
@@ -22,14 +63,23 @@ app.get('/', function(req, res){
     res.render('index');
 });
 
+
+
+/**
+ | ------------------------------------------------------------
+ | login part
+ | ------------------------------------------------------------
+ */
 app.get('/login', function(req, res){
-        res.render('login');
+    res.render('login');
 });
 
-app.post('/login', function(req, res){
-    console.log(res)
-        res.render('login');
+app.post('/login', urlencodedParser, function(req, res){
+    console.log(req.body)
+    res.render('login');
 });
+
+
 
 app.get('/profile', function(req, res){
     res.render('profile',

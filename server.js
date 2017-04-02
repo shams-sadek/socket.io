@@ -9,15 +9,15 @@ users = [];
 connections = [];
 
 server.listen(process.env.PORT || 3000);
-console.log('Server Running...')
+console.log('Server Running...');
 
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/mohsin', function(req, res){
-    res.end('Hi Mohsin');
-});
+// app.get('/mohsin', function(req, res){
+//     res.end('Hi Mohsin');
+// });
 
 
 io.sockets.on('connection', function(socket){
