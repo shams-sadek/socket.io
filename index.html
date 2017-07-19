@@ -25,7 +25,7 @@
                 <div class="col-md-4">
                     <div class="well">
 
-                        <h3>Online Users</h3>
+                        <h3 id="connectedUsers">Online Users</h3>
 
                         <ul class="list-group" id="users"></ul>
 
@@ -37,8 +37,8 @@
 
                     <form id="messageForm">
                         <div class="from-group">
-                            <label for="message">Enter Message</label>
-                            <textarea class="form-control" id="message"></textarea>
+                            <label for="message">Enter Score</label>
+                            <input type="text" class="form-control" id="message" />
 
                             <br />
 
@@ -67,7 +67,9 @@
                 });
 
                 socket.on('new message', function(data){
-                    $chat.append('<div class="well">'+ data.msg + '</div>');
+                    $chat.html('<div class="well">'+ data.msg + '</div>');
+
+                    $("#connectedUsers").html(data.connectedUsers)
                     // window.print();
                 });
 

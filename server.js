@@ -15,15 +15,21 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
-// app.get('/mohsin', function(req, res){
-//     res.end('Hi Mohsin');
-// });
+
+app.get('/score', function(req, res){
+    res.sendFile(__dirname + '/score.html');
+});
 
 
 io.sockets.on('connection', function(socket){
 
     connections.push(socket);
     console.log('Connected: %s sockets connected', connections.length);
+
+    io.sockets.emit('new message', {
+        msg: '99',
+        connectedUsers: connections.length
+    });
 
     /* Disconnect */
     socket.on('disconnect', function(data){
@@ -35,7 +41,8 @@ io.sockets.on('connection', function(socket){
         console.log(data);
 
         io.sockets.emit('new message', {
-            msg: data
+            msg: data,
+            connectedUsers: connections.length
         });
     });
 
